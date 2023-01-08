@@ -7,6 +7,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
+    youtube_link = models.URLField(blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
@@ -14,5 +15,9 @@ class Post(models.Model):
         self.published_date = timezone.now()
         self.save()
 
+    def youtube_embed(self):
+        return "https://www.youtube.com/embed" + self.youtube_link[16:]
+
     def __str__(self):
         return self.title
+
